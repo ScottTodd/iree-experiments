@@ -39,10 +39,10 @@ set(IREE_BUILD_SAMPLES OFF)
 # Users should only include the drivers they actually plan on using to save on
 # compile time and binary size. This sample uses the local synchronous CPU
 # executor and the embedded ELF loader.
-set(IREE_HAL_DRIVER_DEFAULTS OFF)
-set(IREE_HAL_DRIVER_LOCAL_SYNC ON)
-set(IREE_HAL_EXECUTABLE_LOADER_DEFAULTS OFF)
-set(IREE_HAL_EXECUTABLE_LOADER_EMBEDDED_ELF ON)
+# set(IREE_HAL_DRIVER_DEFAULTS OFF)
+# set(IREE_HAL_DRIVER_LOCAL_SYNC ON)
+# set(IREE_HAL_EXECUTABLE_LOADER_DEFAULTS OFF)
+# set(IREE_HAL_EXECUTABLE_LOADER_EMBEDDED_ELF ON)
 
 # The CMake variant specified will change some runtime behavior such as
 # including asserts in Debug builds. There's a group of features commonly used
@@ -58,9 +58,9 @@ set(IREE_HAL_EXECUTABLE_LOADER_EMBEDDED_ELF ON)
 # Here as an example we tie IREE_SIZE_OPTIMIZED to the MinSizeRel variant. This
 # means that Debug and RelWithDebInfo builds will get nice error messages while
 # MinSizeRel will just get status code names.
-if(CMAKE_BUILD_TYPE MATCHES MinSizeRel)
-  set(IREE_SIZE_OPTIMIZED ON)
-endif()
+# if(CMAKE_BUILD_TYPE MATCHES MinSizeRel)
+#   set(IREE_SIZE_OPTIMIZED ON)
+# endif()
 
 # Include the IREE submodule CMake project as a dependency.
 # This will make the IREE targets available for use by subsequent commands.
@@ -77,14 +77,17 @@ add_subdirectory(third_party/iree EXCLUDE_FROM_ALL)
 # command line application that can load a compiled IREE module and pass in
 # buffers. Usage of the runtime APIs is documented in the main IREE repository.
 
-set(_NAME "hello_world")
-add_executable(${_NAME} "hello_world.c")
+# set(_NAME "hello_world")
+# add_executable(${_NAME} "hello_world.c")
 
-# TODO(benvanik): make iree_status_annotate_f always available as a function
-# instead of defining it empty? otherwise optimized builds of the runtime won't
-# export it but external libraries may pull it in.
-target_compile_options(${_NAME} PRIVATE ${IREE_DEFAULT_COPTS})
+# # TODO(benvanik): make iree_status_annotate_f always available as a function
+# # instead of defining it empty? otherwise optimized builds of the runtime won't
+# # export it but external libraries may pull it in.
+# target_compile_options(${_NAME} PRIVATE ${IREE_DEFAULT_COPTS})
 
-# Link in the IREE runtime library.
-# This will pull in dependencies based on the configuration options above.
-target_link_libraries(${_NAME} iree_runtime_runtime)
+# # Link in the IREE runtime library.
+# # This will pull in dependencies based on the configuration options above.
+# target_link_libraries(${_NAME} iree_runtime_runtime)
+
+# Experiments
+add_subdirectory(binarysize)
